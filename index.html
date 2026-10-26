@@ -86,8 +86,8 @@
             <div class="flex items-start gap-2.5">
                 <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base mt-0.5 flex-shrink-0"></i>
                 <div>
-                    <span class="font-bold text-amber-950">為什麼會出現「無法直接抓取 m-ID」？</span>
-                    <p class="mt-0.5 text-amber-800">台灣 Mercari 官方頁面有強大的 <span class="font-semibold text-red-700">Cloudflare 防爬蟲牆 (WAF)</span>，會直接阻擋線上代理伺服器抓取。為了 100% 穩定解決此問題，建議使用右側分頁的<span class="font-bold text-slate-900 underline cursor-pointer" onclick="switchTab('bookmarklet')">【⚡ 一鍵書籤按鈕】</span>或使用下方的<span class="font-bold text-slate-900 underline cursor-pointer" onclick="switchTab('raw')">【📋 貼上網頁原始碼】</span>解析！</p>
+                    <span class="font-bold text-amber-950">為什麼台灣頁面無法直接貼網址解析？</span>
+                    <p class="mt-0.5 text-amber-800">台灣 Mercari 官方頁面有強大的 <span class="font-semibold text-red-700">Cloudflare 防爬蟲牆</span>，會阻擋伺服器自動抓取。請直接使用下方<span class="font-bold text-slate-900 underline cursor-pointer" onclick="switchTab('bookmarklet')">【⚡ 一鍵書籤按鈕】</span>（100%成功跳轉）或<span class="font-bold text-slate-900 underline cursor-pointer" onclick="switchTab('raw')">【📋 貼上原始碼解析】</span>！</p>
                 </div>
             </div>
             <button onclick="switchTab('bookmarklet')" class="whitespace-nowrap px-3.5 py-2 bg-mercari-red hover:bg-mercari-darkRed text-white rounded-lg font-bold transition-colors text-xs flex-shrink-0 shadow-sm flex items-center gap-1.5">
@@ -101,35 +101,32 @@
                 <i class="fa-solid fa-bolt text-amber-500"></i> 【推薦】一鍵書籤跳轉 (100%成功)
             </button>
             <button id="tabSingleBtn" onclick="switchTab('single')" class="px-4 py-3 border-b-2 border-transparent font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-700 transition-all duration-200 flex items-center gap-2">
-                <i class="fa-solid fa-link"></i> 網址 / ID 解析 & 報價
+                <i class="fa-solid fa-calculator"></i> 試算報價與訊息生成
             </button>
             <button id="tabRawBtn" onclick="switchTab('raw')" class="px-4 py-3 border-b-2 border-transparent font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-700 transition-all duration-200 flex items-center gap-2">
                 <i class="fa-solid fa-code"></i> 貼上原始碼解析
             </button>
-            <button id="tabUserscriptBtn" onclick="switchTab('userscript')" class="px-4 py-3 border-b-2 border-transparent font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-700 transition-all duration-200 flex items-center gap-2">
-                <i class="fa-solid fa-puzzle-piece text-purple-600"></i> 油猴腳本 (自動跳轉)
-            </button>
         </div>
 
         <!-- TAB 1: Bookmarklet (Recommended 100% Solution) -->
-        <div id="tabBookmarklet" class="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <div class="md:col-span-7 bg-white rounded-xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+        <div id="tabBookmarklet" class="grid grid-cols-1 gap-6">
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between max-w-3xl mx-auto w-full">
                 <div>
                     <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 mb-3">
                         <i class="fa-solid fa-star"></i> 解決 Cloudflare 阻擋的最完美方案
                     </div>
                     <h3 class="text-lg font-bold text-slate-900 mb-2">瀏覽器「1秒跳轉日本頁面」書籤腳本</h3>
                     <p class="text-xs text-slate-600 leading-relaxed mb-6">
-                        因為台灣 Mercari 會阻擋外部伺服器連線，這個「書籤腳本」可以直接在你的瀏覽器中執行。當你打開台灣煤爐商品頁時，點一下書籤，就能直接從網頁內部抓出真正的日本商品 ID (m-ID) 並開啟日本原廠頁面！
+                        因為台灣 Mercari 會阻擋外部伺服器連線，這個「書籤腳本」可以直接在您的瀏覽器中執行。當您打開台灣煤爐商品頁時，點一下書籤，就能直接從網頁內部抓出真正的日本商品 ID (m-ID) 並開啟日本原廠頁面！
                     </p>
 
                     <!-- Drag Button Area -->
-                    <div class="p-6 bg-slate-50 border-2 border-dashed border-amber-300 rounded-2xl text-center mb-6">
-                        <span class="text-xs font-bold text-slate-500 block mb-3">👇 用滑鼠按住下方紅色按鈕，直接「拖曳」到你的瀏覽器書籤列 (Bookmark Bar) 👇</span>
+                    <div class="p-8 bg-slate-50 border-2 border-dashed border-amber-300 rounded-2xl text-center mb-6">
+                        <span class="text-xs font-bold text-slate-500 block mb-4">👇 用滑鼠按住下方紅色按鈕，直接「拖曳」到您的瀏覽器書籤列 (Bookmark Bar) 👇</span>
                         
                         <a id="bookmarkletLink" href="javascript:(function(){var html=document.documentElement.innerHTML;var match=html.match(/&quot;itemId&quot;:&quot;(m\d+)&quot;/)||html.match(/&quot;id&quot;:&quot;(m\d+)&quot;/)||html.match(/(m\d{9,12})/);var canon=document.querySelector('link[rel=&quot;canonical&quot;]');if(canon&amp;&amp;canon.href.includes('/item/m')){var m=canon.href.match(/m\d+/);if(m){match=m;}}if(match&amp;&amp;match[1]){var jpUrl='https://jp.mercari.com/item/'+match[1];window.open(jpUrl,'_blank');}else{var title=document.title.replace('- Mercari','').trim();window.open('https://jp.mercari.com/search?keyword='+encodeURIComponent(title),'_blank');}})();" 
                            onclick="event.preventDefault(); alert('【使用提示】請用滑鼠「按住不放」，將此按鈕拖曳到瀏覽器頂部的書籤列（Bookmarking Bar）中，而不是直接點擊喔！');"
-                           class="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-mercari-red to-amber-600 hover:from-mercari-darkRed hover:to-amber-700 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transition-all cursor-grab active:cursor-grabbing">
+                           class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-mercari-red to-amber-600 hover:from-mercari-darkRed hover:to-amber-700 text-white font-bold text-base rounded-xl shadow-lg hover:shadow-xl transition-all cursor-grab active:cursor-grabbing">
                             <i class="fa-solid fa-bolt text-yellow-300 animate-bounce"></i> ⚡ 1秒轉日本 Mercari
                         </a>
                     </div>
@@ -146,38 +143,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Right: Quick Search & Manual Fallback Helper -->
-            <div class="md:col-span-5 flex flex-col gap-6">
-                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
-                    <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <i class="fa-brands fa-google text-blue-500"></i> Google 智慧反查助手
-                    </h3>
-                    <p class="text-xs text-slate-500 mb-3">
-                        如果不想安裝書籤，也可以利用 UUID 直接透過 Google 搜尋索引找出原廠日本商品頁！
-                    </p>
-                    <div class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-600 mb-1">台灣網址 / UUID</label>
-                            <input type="text" id="googleUuidInput" placeholder="貼上 68752da3-8c2b-4e21... UUID" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-mono focus:ring-1 focus:ring-mercari-red focus:outline-none">
-                        </div>
-                        <button onclick="searchViaGoogle()" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
-                            <i class="fa-solid fa-magnifying-glass"></i> Google 搜尋對應日本商品
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 flex-1">
-                    <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-lightbulb text-amber-500"></i> 為什麼網址不一樣？
-                    </h3>
-                    <div class="text-xs text-slate-600 space-y-2 leading-relaxed">
-                        <p><b>台灣頁面：</b><code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">tw.mercari.com/.../items/68752da3...</code> (UUID 格式)</p>
-                        <p><b>日本頁面：</b><code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">jp.mercari.com/item/m24541543338</code> (m-ID 格式)</p>
-                        <p class="mt-2 text-slate-500">兩種網址代表同一個賣家的同件商品，使用我們的書籤按鈕可以直接從頁面 JavaScript 內部取出原本的 <span class="font-bold text-slate-800">m-ID</span>！</p>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- TAB 2: Single URL/ID Parse & Quotation Calculator -->
@@ -188,12 +153,12 @@
                 
                 <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
                     <label for="twUrlInput" class="block text-sm font-semibold text-slate-700 mb-2 flex items-center justify-between">
-                        <span><i class="fa-solid fa-link text-mercari-red mr-1.5"></i> 輸入台灣 Mercari 網址 / 日本 m-ID</span>
+                        <span><i class="fa-solid fa-link text-mercari-red mr-1.5"></i> 輸入日本 m-ID / 商品網址</span>
                         <button onclick="clearSingleInput()" class="text-xs text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i> 清空</button>
                     </label>
                     
                     <div class="relative">
-                        <textarea id="twUrlInput" rows="3" placeholder="例如：&#10;https://tw.mercari.com/zh-hant/items/68752da3-8c2b-4e21-8a5e-674f2fcc953c&#10;或直接輸入日本 ID：m24541543338" class="w-full p-3 border border-slate-300 rounded-lg text-xs font-mono focus:outline-none focus:ring-2 focus:ring-mercari-red focus:border-transparent transition-all shadow-inner resize-none"></textarea>
+                        <textarea id="twUrlInput" rows="3" placeholder="例如：可以直接貼上日本 ID：m24541543338" class="w-full p-3 border border-slate-300 rounded-lg text-xs font-mono focus:outline-none focus:ring-2 focus:ring-mercari-red focus:border-transparent transition-all shadow-inner resize-none"></textarea>
                     </div>
 
                     <div class="mt-3 flex flex-wrap gap-2 justify-between items-center">
@@ -242,7 +207,7 @@
 
                             <!-- Extracted Title / Search Keywords -->
                             <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                                <span class="text-xs text-slate-500 block mb-1">搜尋備用關鍵字 / Google 反查</span>
+                                <span class="text-xs text-slate-500 block mb-1">搜尋備用關鍵字</span>
                                 <div class="flex items-center gap-2">
                                     <input type="text" id="resTitle" placeholder="可輸入商品標題進行日本官網搜尋..." class="w-full bg-white border border-slate-300 rounded px-2.5 py-1 text-xs focus:ring-1 focus:ring-mercari-red focus:outline-none">
                                     <button onclick="searchMercariJp()" class="bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 px-3 py-1 rounded text-xs font-medium whitespace-nowrap flex items-center gap-1">
@@ -351,10 +316,10 @@
                 <div class="mb-4">
                     <div class="flex items-center gap-2">
                         <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-700 font-bold text-xs">備用方案</span>
-                        <h3 class="text-base font-bold text-slate-800">貼上台灣頁面原始碼 / 內文自動解析 m-ID</h3>
+                        <h3 class="text-base font-bold text-slate-800">貼上台灣頁面原始碼自動解析 m-ID</h3>
                     </div>
                     <p class="text-xs text-slate-500 mt-1">
-                        在台灣 Mercari 頁面按右鍵選<b>「檢視網頁原始碼」(Ctrl+U)</b>，全選複製後貼在下面，系統會自動透過正則表達式撈出隱藏在 React 狀態資料庫中的 <code class="text-mercari-red font-mono">m-ID</code>！
+                        在台灣 Mercari 頁面按右鍵選<b>「檢視網頁原始碼」(Ctrl+U)</b>，全選複製後貼在下面，系統會自動幫您撈出藏在內文中的 <code class="text-mercari-red font-mono">m-ID</code>！
                     </p>
                 </div>
 
@@ -374,70 +339,13 @@
                     <div id="rawResultBox" class="hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
                         <div class="flex items-center justify-between">
                             <div>
-                                <span class="text-xs text-emerald-700 font-bold block mb-1">✅ 成功提取得日本 ID：</span>
+                                <span class="text-xs text-emerald-700 font-bold block mb-1">✅ 成功提取日本 ID：</span>
                                 <span id="rawExtractedId" class="text-lg font-mono font-extrabold text-slate-900">m00000000000</span>
                             </div>
                             <button onclick="openRawJpLink()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shadow-sm">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i> 開啟日本頁面
                             </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: Userscript / Tampermonkey Auto Button -->
-        <div id="tabUserscript" class="hidden grid-cols-1 gap-6">
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 max-w-3xl mx-auto w-full">
-                <div class="text-center mb-6">
-                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl font-bold">
-                        <i class="fa-solid fa-puzzle-piece"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900">Tampermonkey / 油猴自動化腳本</h3>
-                    <p class="text-xs text-slate-500 mt-1 max-w-lg mx-auto">適合經常處理報價的專業賣家！安裝後只要打開台灣煤爐網頁，頁面右下角就會自動出現一個「🇯🇵 轉日本頁面」懸浮按鈕！</p>
-                </div>
-
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-700">油猴腳本原始碼 (UserScript Code)</span>
-                        <button onclick="copyElementValue('userscriptCodeText')" class="text-xs text-purple-600 hover:underline font-medium"><i class="fa-regular fa-copy mr-1"></i>複製全部腳本</button>
-                    </div>
-
-                    <textarea id="userscriptCodeText" readonly rows="10" class="w-full p-3 bg-slate-900 text-emerald-400 font-mono text-xs rounded-xl border border-slate-800 focus:outline-none custom-scrollbar">// ==UserScript==
-// @name         Mercari 台灣轉日本原廠一鍵跳轉器
-// @namespace    https://tw.mercari.com/
-// @version      1.0
-// @description  在台灣 Mercari 商品頁面自動顯示跳轉到日本原廠頁面的按鈕
-// @match        https://tw.mercari.com/*/items/*
-// @grant        none
-// ==/UserScript==
-
-(function() {
-    'use strict';
-    function createBtn() {
-        if (document.getElementById('jp-jump-btn')) return;
-        const btn = document.createElement('button');
-        btn.id = 'jp-jump-btn';
-        btn.innerHTML = '🇯🇵 跳轉日本 Mercari 頁面';
-        btn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:999999;background:#ff0211;color:#fff;font-weight:bold;padding:12px 20px;border-radius:30px;box-shadow:0 4px 15px rgba(0,0,0,0.3);border:none;cursor:pointer;font-size:14px;';
-        btn.onclick = function() {
-            const html = document.documentElement.innerHTML;
-            const match = html.match(/"itemId":"(m\d+)"/) || html.match(/"id":"(m\d+)"/) || html.match(/(m\d{9,12})/);
-            if (match && match[1]) {
-                window.open('https://jp.mercari.com/item/' + match[1], '_blank');
-            } else {
-                alert('無法從頁面提取 m-ID，將改為關鍵字搜尋');
-            }
-        };
-        document.body.appendChild(btn);
-    }
-    setInterval(createBtn, 1000);
-})();</textarea>
-
-                    <div class="p-4 bg-purple-50 border border-purple-100 rounded-xl text-xs text-purple-900 space-y-1">
-                        <p class="font-bold">安裝說明：</p>
-                        <p>1. 在 Chrome / Edge 瀏覽器擴充功能安裝 <a href="https://www.tampermonkey.net/" target="_blank" class="underline font-semibold">Tampermonkey (暴力猴/油猴)</a>。</p>
-                        <p>2. 點擊油猴圖示 ➔ 「新增腳本」，把上面的程式碼貼上並儲存即可！</p>
                     </div>
                 </div>
             </div>
@@ -500,14 +408,14 @@
 
         // Tab Navigation
         function switchTab(tab) {
-            const tabs = ['bookmarklet', 'single', 'raw', 'userscript'];
+            const tabs = ['bookmarklet', 'single', 'raw'];
             tabs.forEach(t => {
                 const content = document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}`);
                 const btn = document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}Btn`);
                 
                 if (t === tab) {
                     content.classList.remove('hidden');
-                    if (t === 'single' || t === 'bookmarklet' || t === 'raw' || t === 'userscript') content.classList.add('grid');
+                    if (t === 'single' || t === 'bookmarklet' || t === 'raw') content.classList.add('grid');
                     btn.classList.add('border-mercari-red', 'text-mercari-red');
                     btn.classList.remove('border-transparent', 'text-slate-500');
                 } else {
