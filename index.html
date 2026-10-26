@@ -48,4 +48,245 @@
         </button>
         <button onclick="switchTab('quote')" id="tab-quote" class="tab-btn flex-1 py-3 px-2 text-center flex items-center justify-center space-x-1.5 transition">
           <i class="fa-solid fa-calculator text-indigo-500"></i>
-          <span>試算報
+          <span>試算報價與訊息生成</span>
+        </button>
+        <button onclick="switchTab('source')" id="tab-source" class="tab-btn flex-1 py-3 px-2 text-center flex items-center justify-center space-x-1.5 transition">
+          <i class="fa-solid fa-code text-slate-500"></i>
+          <span>貼上原始碼解析</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: Bookmarklet (Main Solution) -->
+      <div id="content-bookmark" class="p-4 sm:p-6">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-amber-900">
+          <div class="flex items-start space-x-3">
+            <i class="fa-solid fa-circle-info text-amber-600 text-lg mt-0.5"></i>
+            <div>
+              <h3 class="font-bold text-sm">iOS Safari / 電腦瀏覽器設定說明</h3>
+              <p class="text-xs mt-1 text-amber-800 leading-relaxed">
+                因為 iOS 系統安全性限制，無法直接點擊執行動態腳本。請點擊下方按鈕複製代碼，並新增為 Safari 書籤即可！
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center py-4">
+          <h2 class="text-lg font-bold text-slate-800 mb-2">瀏覽器「1秒跳轉日本頁面」專用腳本</h2>
+          <p class="text-xs text-slate-500 mb-6">複製以下腳本網址，貼入您的瀏覽器書籤中：</p>
+
+          <div class="max-w-lg mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 shadow-inner">
+            <button onclick="copyBookmarkletScript()" class="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-red-500/30 flex items-center justify-center space-x-2 transition active:scale-95">
+              <i class="fa-solid fa-copy text-lg"></i>
+              <span>📋 複製 iOS Safari / 電腦專用腳本代碼</span>
+            </button>
+
+            <div class="mt-4 text-left">
+              <label class="block text-xs font-semibold text-slate-500 mb-1">腳本內容（可長按全選複製）：</label>
+              <textarea id="bookmarkletCodeText" readonly rows="3" class="w-full p-2.5 text-xs font-mono bg-white border border-slate-300 rounded-lg text-slate-600 focus:outline-none" onclick="this.select()">javascript:(function(){var match=document.documentElement.innerHTML.match(/m\d{10,11}/);if(match){window.location.href='https://jp.mercari.com/item/'+match[0];}else{var canon=document.querySelector('link[rel="canonical"]');if(canon&&canon.href.match(/m\d{10,11}/)){window.location.href='https://jp.mercari.com/item/'+canon.href.match(/m\d{10,11}/)[0];}else{alert('無法找到日本 m-ID，請確認是否在台灣煤爐商品頁面！');}}})();</textarea>
+            </div>
+          </div>
+
+          <div class="text-left bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-700 text-xs sm:text-sm space-y-3">
+            <p class="font-bold text-slate-900 border-b border-slate-200 pb-2 flex items-center space-x-2">
+              <i class="fa-mobile-screen-button text-red-500"></i>
+              <span>iPhone Safari 簡易設定 3 步驟（只需設定一次）：</span>
+            </p>
+            <ol class="list-decimal list-inside space-y-2 text-slate-600">
+              <li>點擊上方 <b>「📋 複製專用腳本代碼」</b> 按鈕。</li>
+              <li>在 Safari 隨便把一個網頁存成書籤（例如按分享 ➔ 加入書籤）。</li>
+              <li>點開 Safari 書籤頁面（📖）點右下角 <b>「編輯」</b>，選擇剛新增的書籤：
+                <ul class="list-disc list-inside ml-5 mt-1 text-slate-500 space-y-1">
+                  <li>名稱改為：<code class="bg-white px-1 py-0.5 rounded border text-red-600 font-bold">⚡ 1秒轉日本煤爐</code></li>
+                  <li>網址全部刪除，<b>貼上</b>剛複製的代碼並儲存。</li>
+                </ul>
+              </li>
+            </ol>
+            <p class="text-xs text-emerald-600 font-semibold pt-1">
+              🎉 完成後，今後在 Safari 開啟客人給的台灣煤爐頁面，點開書籤點擊「⚡ 1秒轉日本煤爐」就會立刻跳轉日本頁面！
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Quote Generator -->
+      <div id="content-quote" class="p-4 sm:p-6 hidden">
+        <h2 class="text-base font-bold text-slate-800 mb-4 flex items-center space-x-2">
+          <i class="fa-solid fa-calculator text-indigo-500"></i>
+          <span>日幣快速算報價 & 訊息模組</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">日本 Mercari 商品網址 / m-ID</label>
+              <input type="text" id="calcJpUrl" placeholder="例如：https://jp.mercari.com/item/m12345678901" class="w-full p-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updateQuote()">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">日幣售價 (JPY ¥)</label>
+                <input type="number" id="calcJpyPrice" placeholder="5000" class="w-full p-2.5 text-sm font-bold bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-800" oninput="updateQuote()">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">當前匯率</label>
+                <input type="number" step="0.001" id="calcRate" value="0.225" class="w-full p-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updateQuote()">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">預估國際運費 (TWD)</label>
+                <input type="number" id="calcShipping" value="150" class="w-full p-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updateQuote()">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">代購手續費 (TWD)</label>
+                <input type="number" id="calcFee" value="100" class="w-full p-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updateQuote()">
+              </div>
+            </div>
+
+            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-indigo-600 font-semibold block">試算總報價</span>
+                <span class="text-xs text-indigo-400">(日幣×匯率 + 運費 + 手續費)</span>
+              </div>
+              <div class="text-right">
+                <span id="calcResultTwd" class="text-2xl font-black text-indigo-600">NT$ 0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-semibold text-slate-600">自動生成客戶回覆訊息</label>
+              <button onclick="copyQuoteMessage()" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-1 px-3 rounded-lg shadow-sm transition">
+                <i class="fa-solid fa-copy mr-1"></i>複製訊息
+              </button>
+            </div>
+            <textarea id="quoteMessageText" rows="9" class="w-full p-3 text-xs font-mono bg-slate-800 text-slate-100 rounded-xl border border-slate-700 focus:outline-none leading-relaxed" readonly></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Raw HTML Source Code Extractor -->
+      <div id="content-source" class="p-4 sm:p-6 hidden">
+        <h2 class="text-base font-bold text-slate-800 mb-2 flex items-center space-x-2">
+          <i class="fa-solid fa-code text-slate-600"></i>
+          <span>複製台灣網頁原始碼提取 (100% 成功備用方案)</span>
+        </h2>
+        <p class="text-xs text-slate-500 mb-4">如果在電腦上，可在台灣煤爐頁面按右鍵 ➔「檢視網頁原始碼」(Ctrl+U)，全選貼在下方：</p>
+
+        <textarea id="rawSourceInput" rows="6" placeholder="請在此貼上台灣煤爐頁面的 HTML 原始碼..." class="w-full p-3 text-xs font-mono bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-slate-400 focus:outline-none mb-3"></textarea>
+
+        <button onclick="extractFromSource()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow transition flex items-center justify-center space-x-2">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>從原始碼解析日本 m-ID</span>
+        </button>
+
+        <div id="sourceResultBox" class="mt-4 hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+          <p class="text-xs text-emerald-700 font-semibold mb-1">解析成功！對應的日本商品資訊：</p>
+          <div class="flex items-center justify-between bg-white p-3 rounded-lg border border-emerald-100">
+            <span id="sourceExtractedId" class="font-mono font-bold text-slate-800 text-sm"></span>
+            <a id="sourceExtractedLink" href="#" target="_blank" class="bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">開啟日本頁面</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-50 flex items-center space-x-2">
+    <i class="fa-solid fa-circle-check text-emerald-400"></i>
+    <span id="toastMsg">已複製到剪貼簿</span>
+  </div>
+
+  <script>
+    function switchTab(tabName) {
+      ['bookmark', 'quote', 'source'].forEach(t => {
+        document.getElementById(`content-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}`).classList.remove('active');
+      });
+      document.getElementById(`content-${tabName}`).classList.remove('hidden');
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.remove('opacity-0');
+      setTimeout(() => {
+        toast.classList.add('opacity-0');
+      }, 2500);
+    }
+
+    function copyBookmarkletScript() {
+      const code = document.getElementById('bookmarkletCodeText').value;
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('已複製 iOS 專用腳本！請貼入 Safari 書籤網址欄');
+      }).catch(() => {
+        const textarea = document.getElementById('bookmarkletCodeText');
+        textarea.select();
+        document.execCommand('copy');
+        showToast('已複製 iOS 專用腳本！');
+      });
+    }
+
+    function updateQuote() {
+      const url = document.getElementById('calcJpUrl').value.trim();
+      const jpy = parseFloat(document.getElementById('calcJpyPrice').value) || 0;
+      const rate = parseFloat(document.getElementById('calcRate').value) || 0;
+      const shipping = parseFloat(document.getElementById('calcShipping').value) || 0;
+      const fee = parseFloat(document.getElementById('calcFee').value) || 0;
+
+      let mId = '';
+      const mMatch = url.match(/m\d{10,11}/);
+      if (mMatch) mId = mMatch[0];
+
+      const twdCalculated = Math.ceil((jpy * rate) + shipping + fee);
+      document.getElementById('calcResultTwd').innerText = `NT$ ${twdCalculated.toLocaleString()}`;
+
+      const jpLink = mId ? `https://jp.mercari.com/item/${mId}` : url;
+
+      const msg = `您好！已為您確認日本 Mercari 商品報價如下：\n\n` +
+                  `🇯🇵 日本商品頁面：${jpLink || '（請提供網址）'}\n` +
+                  `💰 商品金額：¥${jpy.toLocaleString()} 日圓\n` +
+                  `💵 預估到台總價：NT$ ${twdCalculated.toLocaleString()} 元\n` +
+                  `（含國際運費 NT$ ${shipping} + 代購服務費 NT$ ${fee}）\n\n` +
+                  `若確認需要下單，請回覆告知，這邊會立刻為您處理，謝謝！`;
+
+      document.getElementById('quoteMessageText').value = msg;
+    }
+
+    function copyQuoteMessage() {
+      const msg = document.getElementById('quoteMessageText').value;
+      if (!msg) return;
+      navigator.clipboard.writeText(msg).then(() => {
+        showToast('報價訊息已複製！');
+      });
+    }
+
+    function extractFromSource() {
+      const html = document.getElementById('rawSourceInput').value;
+      const match = html.match(/m\d{10,11}/);
+      if (match) {
+        const mId = match[0];
+        document.getElementById('sourceExtractedId').innerText = `商品 ID: ${mId}`;
+        const link = document.getElementById('sourceExtractedLink');
+        link.href = `https://jp.mercari.com/item/${mId}`;
+        document.getElementById('sourceResultBox').classList.remove('hidden');
+
+        // Auto sync to quote generator
+        document.getElementById('calcJpUrl').value = `https://jp.mercari.com/item/${mId}`;
+        updateQuote();
+        showToast(`成功提取日本 ID: ${mId}`);
+      } else {
+        alert('無法在貼上的原始碼中找到 m-ID，請確認是否為正確的商品頁面原始碼！');
+      }
+    }
+
+    // Init
+    updateQuote();
+  </script>
+</body>
+</html>
